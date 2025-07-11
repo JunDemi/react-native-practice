@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export interface Todo {
   id: string;
@@ -21,9 +21,7 @@ export const useTodoStore = create<TodoState>((set) => ({
     })),
   toggleTodo: (id) =>
     set((state) => ({
-      todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      ),
+      todos: state.todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)),
     })),
   removeTodo: (id) =>
     set((state) => ({
