@@ -9,6 +9,7 @@ const Todo = () => {
   const [text, setText] = useState<string>('');
   const { todos, addTodo } = useTodoStore();
 
+  console.log('Hello Todo');
   return (
     <>
       <View style={todoStyle.header}>

@@ -1,26 +1,44 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
+import GlobalMetrics from '../common/GlobalMetrics';
 
 const Header = () => {
   return (
     <View style={style.header}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>My To-Do App</Text>
+      <View style={style.logoContainer}>
+        <Image source={require('@assets/logo.png')} style={style.logo} />
+      </View>
+      <GlobalMetrics />
     </View>
   );
 };
 
 export default Header;
 
-export const style = StyleSheet.create({
+const style = StyleSheet.create({
   header: {
-    height: 70,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 30,
+    height: 64,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     zIndex: 5,
   },
+  metricsContainer: {
+    height: 24,
+    paddingHorizontal: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#e0e0e0',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  logoContainer: {
+    paddingHorizontal: 20,
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
   logo: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
+    width: 100,
+    height: 22,
+    resizeMode: 'cover',
   },
 });
