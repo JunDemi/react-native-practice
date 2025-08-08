@@ -21,16 +21,8 @@ const style = StyleSheet.create({
     alignItems: 'flex-start',
     zIndex: 5,
   },
-  metricsContainer: {
-    height: 24,
-    paddingHorizontal: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
   logoContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',

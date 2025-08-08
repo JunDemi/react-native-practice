@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "qtz-app",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
@@ -12,6 +12,7 @@
     "@expo/vector-icons": "^14.1.0",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
+    "dayjs": "^1.11.13",
     "expo": "~53.0.9",
     "expo-constants": "~17.1.7",
     "expo-linking": "~7.1.7",
@@ -19,9 +20,9 @@
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-safe-area-context": "5.4.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
-    "react-native-swiper": "^1.6.0",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

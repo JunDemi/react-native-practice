@@ -45,7 +45,7 @@ const menuList: {
 }[] = [
   {
     icon: <Feather name='user' size={20} color='#875BF7' />,
-    label: '내 계정',
+    label: '로그인',
   },
   {
     icon: <MaterialCommunityIcons name='view-dashboard-outline' size={20} color='#875BF7' />,
@@ -57,6 +57,6 @@ const menuList: {
   },
   {
     icon: <MaterialIcons name='event-busy' size={20} color='#875BF7' />,
-    label: '이벤트',
+    label: '공지사항',
   },
 ];

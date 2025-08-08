@@ -6,7 +6,8 @@ import { useQueries } from '@tanstack/react-query';
 import { View, StyleSheet, Text } from 'react-native';
 import ChartChevron from '../common/ChartChevron';
 import { formatLpadFixedNumber } from '@/lib/utils/formatLpadFixedNumber';
-import Swiper from 'react-native-swiper';
+import Animated, { useSharedValue, withTiming, useAnimatedStyle, Easing, runOnJS } from 'react-native-reanimated';
+import { useEffect } from 'react';
 
 const GlobalMetrics = () => {
   //useQuery
@@ -32,42 +33,85 @@ const GlobalMetrics = () => {
       },
     ],
   });
+
   const globalMetrics = cmcGlobalData.data?.result || {};
   const quote = globalMetrics?.quote;
   const fearGreed = fearGreedData.data?.result?.value || 0;
 
   const metricsList: React.ReactNode[] = [
-    <MarketCap quote={quote} />,
-    <Volume24h quote={quote} />,
-    <Dominance globalMetrics={globalMetrics} />,
-    <FearGreedIndex fearGreedValue={fearGreed} />,
-    <Futures globalMetrics={globalMetrics} />,
+    <MarketCap quote={quote} key='market-cap' />,
+    <Volume24h quote={quote} key='volume-24h' />,
+    <Dominance globalMetrics={globalMetrics} key='dominance' />,
+    <FearGreedIndex fearGreedValue={fearGreed} key='fear-greed' />,
+    <Futures globalMetrics={globalMetrics} key='futures' />,
   ];
+
+  // Animated values
+  const translateY = useSharedValue(0);
+  const currentIndex = useSharedValue(0);
+  const slideHeight = 24;
+
+  // Auto-play function
+  const nextSlide = () => {
+    'worklet';
+    const nextIndex = currentIndex.value + 1;
+
+    if (nextIndex >= metricsList.length) {
+      // 마지막 슬라이드에서 첫 번째로 이동
+      currentIndex.value = nextIndex;
+      translateY.value = withTiming(
+        -nextIndex * slideHeight,
+        {
+          duration: 300,
+          easing: Easing.out(Easing.cubic),
+        },
+        (finished) => {
+          if (finished) {
+            // 애니메이션 완료 후 즉시 처음 위치로 리셋 (애니메이션 없이)
+            currentIndex.value = 0;
+            translateY.value = 0;
+          }
+        },
+      );
+    } else {
+      // 일반적인 다음 슬라이드로 이동
+      currentIndex.value = nextIndex;
+      translateY.value = withTiming(-nextIndex * slideHeight, {
+        duration: 300,
+        easing: Easing.out(Easing.cubic),
+      });
+    }
+  };
+
+  // Start auto-play
+  useEffect(() => {
+    const interval = setInterval(() => {
+      runOnJS(nextSlide)();
+    }, 2000); // 2초마다 전환
+
+    return () => clearInterval(interval);
+  }, [metricsList.length]);
+
+  // Animated style
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
 
   return (
     <View style={style.metricsContainer}>
-      <Swiper
-        autoplay
-        autoplayTimeout={2}
-        loop
-        horizontal={false}
-        showsPagination={false}
-        scrollEnabled={false}
-        autoplayDirection={true}
-      >
-        {metricsList.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              flexDirection: 'row',
-              height: 24,
-              alignItems: 'center',
-            }}
-          >
-            {item}
-          </View>
-        ))}
-      </Swiper>
+      <View style={style.sliderWrapper}>
+        <Animated.View style={[style.slidesContainer, animatedStyle]}>
+          {metricsList.map((item, index) => (
+            <View key={index} style={style.slide}>
+              {item}
+            </View>
+          ))}
+          {/* 무한 루프를 위한 첫 번째 슬라이드 복제 */}
+          <View style={style.slide}>{metricsList[0]}</View>
+        </Animated.View>
+      </View>
     </View>
   );
 };
@@ -168,12 +212,26 @@ const FearGreedIndex = ({ fearGreedValue }: { fearGreedValue: number }) => {
 
 const style = StyleSheet.create({
   metricsContainer: {
+    width: '100%',
     height: 24,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+  },
+  sliderWrapper: {
+    height: 24,
+    overflow: 'hidden',
+  },
+  slidesContainer: {
+    flexDirection: 'column',
+  },
+  slide: {
+    height: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   container: {
     flexDirection: 'row',

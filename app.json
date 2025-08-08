@@ -1,27 +1,35 @@
 {
   "expo": {
-    "name": "todo-app",
-    "slug": "todo-app",
-    "schme": "todo-app-schme",
+    "name": "qtz-app",
+    "slug": "qtz-app",
+    "schme": "qtz-app-schme",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/qtz-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/qtz-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jungwook.qtzapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.jungwook.qtzapp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -29,6 +37,12 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "47df014b-cff2-48b5-9056-fb7beb54d199"
+      }
+    }
   }
 }

@@ -2,27 +2,30 @@ import Header from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const queryClient = new QueryClient();
 
 const RootLayout = () => {
   return (
-    <SafeAreaView style={layoutStyle.container}>
-      <QueryClientProvider client={queryClient}>
-        <Header />
-        <View style={layoutStyle.content}>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: '#fff' },
-              animation: 'none',
-            }}
-          />
-        </View>
-        <Navigation />
-      </QueryClientProvider>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={layoutStyle.container}>
+        <QueryClientProvider client={queryClient}>
+          <Header />
+          <View style={layoutStyle.content}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: '#fff' },
+                animation: 'none',
+              }}
+            />
+          </View>
+          <Navigation />
+        </QueryClientProvider>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -35,6 +38,6 @@ const layoutStyle = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20,
+    padding: 15,
   },
 });
