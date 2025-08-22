@@ -3,9 +3,9 @@ import Animated, { useSharedValue, withTiming, useAnimatedStyle, Easing, runOnJS
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FEApiCaller } from '@/lib/api';
+import dayjs from 'dayjs';
 import { ResponseObject } from '@/types/swagger';
 import { SignalRolling } from '@/types/api/signal.interface';
-import dayjs from 'dayjs';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -37,7 +37,7 @@ const SignalSlider = () => {
       translateX.value = withTiming(
         -nextIndex * slideWidth,
         {
-          duration: 700,
+          duration: 1000,
           easing: Easing.out(Easing.cubic),
         },
         (finished) => {
@@ -52,7 +52,7 @@ const SignalSlider = () => {
       // 일반적인 다음 슬라이드로 이동
       currentIndex.value = nextIndex;
       translateX.value = withTiming(-nextIndex * slideWidth, {
-        duration: 700,
+        duration: 1000,
         easing: Easing.out(Easing.cubic),
       });
     }
@@ -62,7 +62,7 @@ const SignalSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       runOnJS(nextSlide)();
-    }, 2500); // 2.5초마다 전환
+    }, 4000); // 4초마다 전환
 
     return () => clearInterval(interval);
   }, [signalList.length]);

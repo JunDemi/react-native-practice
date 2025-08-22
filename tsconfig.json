@@ -4,14 +4,14 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@dataTypes/*": ["./src/types/*"],
       "@app/*": ["./src/app/*"],
       "@components/*": ["./src/components/*"],
       "@store/*": ["./src/store/*"],
       "@styles/*": ["./src/styles/*"],
       "@lib/*": ["./src/lib/*"],
-      "@types/*": ["./src/types/*"],
       "@config/*": ["./src/config/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
     }
   }
 }
